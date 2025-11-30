@@ -12,8 +12,8 @@ pipeline {
         TAG = "${env.BUILD_NUMBER}"
         
         // Environment based IPs
-        UAT_IP = "13.x.x.x"
-        PROD_IP = "15.x.x.x"
+        UAT_IP = "13.232.38.229"
+        PROD_IP = "13.201.66.24"
         SSH_KEY = credentials('ec2-ssh-private-key')
     }
 
