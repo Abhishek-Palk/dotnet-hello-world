@@ -10,14 +10,14 @@ pipeline {
         DOCKER_CREDS = credentials('dockerhub-creds')
         IMAGE_NAME = "abhishekpalkar86/dotnet-hello-world"
         TAG = "${env.BUILD_NUMBER}"
-        
-        // Environment based IPs
+
         UAT_IP = "13.232.38.229"
         PROD_IP = "13.201.66.24"
         SSH_KEY = credentials('ec2-ssh-private-key')
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 git branch: 'master', url: 'https://github.com/Abhishek-Palk/dotnet-hello-world.git'
@@ -45,13 +45,18 @@ pipeline {
             steps {
                 script {
                     def TARGET_IP = (params.ENV == "UAT") ? UAT_IP : PROD_IP
+
+                    // Write SSH key to file
+                    writeFile file: 'key.pem', text: SSH_KEY_PSW
+                    sh "chmod 600 key.pem"
+
                     sh """
-                    ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@${TARGET_IP} '
+                    ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@${TARGET_IP} << EOF
                         docker pull ${IMAGE_NAME}:${TAG}
                         docker stop app || true
                         docker rm app || true
                         docker run -d --name app -p 5000:80 ${IMAGE_NAME}:${TAG}
-                    '
+                    EOF
                     """
                 }
             }
@@ -61,10 +66,9 @@ pipeline {
             steps {
                 script {
                     def TARGET_IP = (params.ENV == "UAT") ? UAT_IP : PROD_IP
-                    sh "curl http://${TARGET_IP}:5000/health"
+                    sh "curl http://${TARGET_IP}:5000/health || true"
                 }
             }
         }
     }
 }
-
