@@ -11,8 +11,8 @@ pipeline {
         IMAGE_NAME = "abhishekpalkar86/dotnet-hello-world"
         TAG = "${env.BUILD_NUMBER}"
 
-        UAT_IP = "13.232.38.229"
-        PROD_IP = "13.201.66.24"
+        UAT_IP = "13.201.66.24"
+        PROD_IP = "13.232.38.229"
         SSH_KEY = credentials('ec2-ssh-private-key')
     }
 
