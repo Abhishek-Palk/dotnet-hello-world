@@ -9,7 +9,7 @@ pipeline {
         AWS_ACCESS_KEY_ID = credentials('aws-access-key')
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-key')
         DOCKER_CREDS = credentials('dockerhub-creds')
-        IMAGE_NAME = "yourdockerhub/dotnet-hello-world"
+        IMAGE_NAME = "abhishekpalkar86/dotnet-hello-world"
         TAG = "${env.BUILD_NUMBER}"
         
         // Environment based IPs
