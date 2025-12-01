@@ -68,7 +68,6 @@ EOF
         }
 
         stage('Health Check') {
-            agent { label 'master' }
             steps {
                 script {
                     def TARGET_IP = (params.ENV == "UAT") ? UAT_IP : PROD_IP
