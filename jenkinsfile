@@ -11,7 +11,7 @@ pipeline {
         TAG          = "${env.BUILD_NUMBER}"
 
         // Environment based IPs
-        UAT_IP  = "13.201.66.24"
+        UAT_IP  = "13.235.246.202"
         PROD_IP = "13.232.38.229"
     }
 
