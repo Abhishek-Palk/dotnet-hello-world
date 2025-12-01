@@ -71,7 +71,7 @@ EOF
             steps {
                 script {
                     def TARGET_IP = (params.ENV == "UAT") ? UAT_IP : PROD_IP
-                    sh "curl -f http://${TARGET_IP}:5000/health || true"
+                    sh "curl -f http://${TARGET_IP}:5000/health"
                 }
             }
         }
